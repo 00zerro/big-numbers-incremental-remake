@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>bNI - Remake</title>
+</head>
+<body>
+    <div id="app">
+
+        <div class="tabs-container">
+            <ul class="tabs">
+                <li class="tab buttonHover" data-tab-target="#pointsTab"><img src="img/points.png" class="tab-image"> Points</li>
+                <li class="tab buttonHover" data-tab-target="#subtab-content"><img src='img/limit.png' class="tab-image"> Limit</li>
+                <li class="tab buttonHover" data-tab-target="#optionsTab"><img src="img/options.png" class="tab-image"> Options</li>
+            </ul>
+        </div>
+
+        <div id="tab-content">
+
+            <div class="basic-upgrades-container active" id="pointsTab" data-tab-content>
+
+                <div class="resources-container">
+                    <ul><span id="pointsandlimit">{{format(player.points)}} Points <img src="img/points.png" class="tab-image"> / {{ format(player.limit )}} (Limit) <img src="img/limit.png" class="tab-image"></span></ul>
+                    <ul> <i>you are getting {{ format(player.basicUpgrades[0].amount * player.basicUpgrades[0].mult) }} Points / Tick</i> </ul>
+                </div>
+        
+
+                <div class="basic-upgrade" >
+                    <img src="img/upgrade1.png" class="upgrade-image">
+                    <p><b> Upgrade 1</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[0].amount)}} ({{ format(player.basicUpgrades[0].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[0].mult) }}x</p>
+                    <p class="buy-button buttonHover" @click="buyBasicUpgrade(0)">cost: {{ format(player.basicUpgrades[0].cost) }} Points </p><span @click="autoBuySwitch(0)" id="autobuy1" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+                <div class="basic-upgrade" >
+                    <img src="img/upgrade2.png" class="upgrade-image">
+                    <p><b> Upgrade 2</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[1].amount)}} ({{ format(player.basicUpgrades[1].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[1].mult) }}x</p>
+                    <p class="buy-button buttonHover" @click="buyBasicUpgrade(1)">cost: {{ format(player.basicUpgrades[1].cost) }} Points</p><span @click="autoBuySwitch(1)" id="autobuy2" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+                <div class="basic-upgrade">
+                    <img src="img/upgrade3.png" class="upgrade-image">
+                    <p><b> Upgrade 3</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[2].amount)}} ({{ format(player.basicUpgrades[2].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[2].mult) }}x</p>
+                    <p class="buy-button buttonHover" @click="buyBasicUpgrade(2)">cost: {{ format(player.basicUpgrades[2].cost) }} Points</p><span @click="autoBuySwitch(2)" id="autobuy3" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+                <div class="basic-upgrade">
+                    <img src="img/upgrade4.png" class="upgrade-image">
+                    <p><b> Upgrade 4</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[3].amount)}} ({{ format(player.basicUpgrades[3].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[3].mult) }}x</p>
+                    <p class="buy-button buttonHover"  @click="buyBasicUpgrade(3)">cost: {{ format(player.basicUpgrades[3].cost) }} Points</p><span @click="autoBuySwitch(3)" id="autobuy4" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+                <div class="basic-upgrade">
+                    <img src="img/upgrade5.png" class="upgrade-image">
+                    <p><b> Upgrade 5</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[4].amount)}} ({{ format(player.basicUpgrades[4].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[4].mult) }}x</p>
+                    <p class="buy-button buttonHover"  @click="buyBasicUpgrade(4)">cost: {{ format(player.basicUpgrades[4].cost) }} Points</p><span @click="autoBuySwitch(4)" id="autobuy5" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+                <div class="basic-upgrade">
+                    <img src="img/upgrade6.png" class="upgrade-image">
+                    <p><b> Upgrade 6</b></p>
+                    <p><i>amount: {{ format(player.basicUpgrades[5].amount)}} ({{ format(player.basicUpgrades[5].bought) }})</i></p>
+                    <p>multiplier: {{ format(player.basicUpgrades[5].mult) }}x</p>
+                    <p class="buy-button buttonHover"  @click="buyBasicUpgrade(5)">cost: {{ format(player.basicUpgrades[5].cost) }} Points</p><span @click="autoBuySwitch(5)" id="autobuy6" class="autobuy-not-unlocked buttonHover autobuy-button">AutoBuy: OFF</span>
+                </div>
+    
+    
+            </div>
+    
+            <div id="subtab-content" data-tab-content>
+
+                <div class="subtabs-container">
+                    <ul class="subtabs">
+                        <li class="subtab buttonHover" data-subtab-target="#limit-tab-1">Limit Points</li>
+                        <li class="subtab buttonHover" data-subtab-target="#limit-tab-2">Decay</li>
+                    </ul>
+                </div>
+
+                <div id="limit-tab-1" data-subtab-content class="subactive">
+
+                    <div class="limit-reset-button buttonHover" @click="reset">
+                        Reset Points for <span>{{format(player.lpGain)}} Limit Points</span>
+    
+                    </div>
+
+                    <div class="autoreset-not-unlocked" id="autoreset-button" @click="autoReset">
+                        AutoReset: OFF
+                    </div>
+
+                    <div>
+
+                        <p id="limit-points-amount"><i><B>you have {{ format(player.limitPoints) }} Limit Points</B></i></p>
+                            <table class="limit-upgrades-container">
+    
+                                <tr>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade1.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(0)" @click="buyLimitUpgrades(0)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade2.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(1)" @click="buyLimitUpgrades(1)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade3.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(2)" @click="buyLimitUpgrades(2)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade4.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(3)" @click="buyLimitUpgrades(3)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade5.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(4)" @click="buyLimitUpgrades(4)"></td>
+                                </tr>
+                                <tr>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade6.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(5)" @click="buyLimitUpgrades(5)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade7.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(6)" @click="buyLimitUpgrades(6)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade8.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(7)" @click="buyLimitUpgrades(7)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade9.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(8)" @click="buyLimitUpgrades(8)"></td>
+                                    <td class="limit-upgrade"><img src="img/limitUpgrade10.png" class="limit-upgrade-img buttonHover" @mouseover="showUpgradeText(9)" @click="buyLimitUpgrades(9)"></td>
+                                </tr>
+                            </table>
+    
+                            <p id="upgrade-text">{{ player.textShowing }}<br>Cost: {{ format(player.costShowing) }} Limit Points<br><i><span id="upgrade-bought-text">{{ player.boughtShowing }}</span></i></p>
+                    </div>
+
+                </div>
+
+                <div id="limit-tab-2" data-subtab-content>
+                    
+                    <p class="decay-points-amount">you have {{ format(player.decayPoints) }} Decay Points</p>
+
+                    <div class="decay-generators-container">
+
+
+                        <p class="decay-power-amount"><b>you have {{ format(player.decayPower) }} Decay Power,</b></p>
+                    
+                        <div class="power-generator buttonHover"  @click="buyPowerGen(0)">
+                            <p>generating {{ format(player.decayGenerators[0].amount )}} Decay Power</p>
+                            <p>cost: {{ format(player.decayGenerators[0].cost) }} Decay Points</p>
+                        </div>
+
+                        <div class="power-generator buttonHover"  @click="buyPowerGen(1)">
+                            <p>generating {{ format(player.decayGenerators[1].amount )}} Generator 1s</p>
+                            <p>cost: {{ format(player.decayGenerators[1].cost) }} Decay Points</p>
+                        </div>
+
+                        <div class="power-generator buttonHover"  @click="buyPowerGen(2)">
+                            <p>generating {{ format(player.decayGenerators[2].amount) }} Generator 2s</p>
+                            <p>cost: {{ format(player.decayGenerators[2].cost) }} Decay Points</p>
+                        </div>
+
+                        <p class="decay-limit-reducing"><i>reducing Limit by {{ format(player.decayPower * 0.5) }} Points / Tick</i></p>
+
+                    </div>
+
+                    <div class="break-limit-container">
+                        <div class="break-limit-button buttonHover not-unlocked" id="br-button" @click="breakLimit">
+                            Break Limit<br>
+                            <i>broken: {{ player.limitBroken }}</i>
+                        </div>
+
+                        <div class="decay-points-gain buttonHover not-unlocked" id="reset-decay-button" @click="prestige">
+                            prestige Decay Generators and Limit Upgrades to gain {{ format(player.decayPointsGain) }} Decay Points
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            
+            <div id="optionsTab" data-tab-content>
+                <div class="saveandload">
+                <div class="saveButton buttonHover" @click="saveGame">Save</div>
+                <div class="loadButton buttonHover" @click="loadGame">Load</div>
+                </div>
+                <p id="autosave-text"><i>game autosaves every 30 seconds</i></p>
+
+                <p>version 0.1</p>
+                <a href="https://00zerro.github.io/mainPage/" target="_blank" style="color: white">My main page (still WIP)</a>
+                
+            </div>
+
+        </div>
+        
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/gameloop.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
