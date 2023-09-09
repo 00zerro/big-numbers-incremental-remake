@@ -2,18 +2,20 @@ function gameLoop(that){
 
     // TABS
 
-    const tabs = document.querySelectorAll('[data-tab-target]')
-    const tabContents = document.querySelectorAll('[data-tab-content]')
+const tabs = document.querySelectorAll('[data-tab-target]')
+const tabContents = document.querySelectorAll('[data-tab-content]')
 
-    tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => tabContent.classList.remove('active'))
-        tabs.forEach(tab => tab.classList.remove('active'))
-        target.classList.add('active')
-        tab.classList.add('active')
-    })
+tabs.forEach(tab => {
+tab.addEventListener('click', () => {
+    const target = document.querySelector(tab.dataset.tabTarget)
+    tabContents.forEach(tabContent => tabContent.classList.remove('active'))
+    tabs.forEach(tab => tab.classList.remove('active'))
+    target.classList.add('active')
+    tab.classList.add('active')
 })
+})
+
+// LIMIT SUBTABS
 
 const subtabs = document.querySelectorAll('[data-subtab-target]')
 const subtabContents = document.querySelectorAll('[data-subtab-content]')
@@ -28,14 +30,36 @@ subtab.addEventListener('click', () => {
 })
 })
 
+// LEGACY SUBTABS
+
+const legacysubtabs = document.querySelectorAll('[data-legacysubtab-target]')
+const legacysubtabContents = document.querySelectorAll('[data-legacysubtab-content]')
+
+legacysubtabs.forEach(legacysubtab => {
+    legacysubtab.addEventListener('click', () => {
+    const target = document.querySelector(legacysubtab.dataset.legacysubtabTarget)
+    legacysubtabContents.forEach(legacysubtabContent => legacysubtabContent.classList.remove('legacysubactive'))
+    legacysubtabs.forEach(legacysubtab => legacysubtab.classList.remove('legacysubactive'))
+    target.classList.add('legacysubactive')
+    legacysubtab.classList.add('legacysubactive')
+})
+})
+
 
 
 
     // LOOP BEFORE LIMIT
     if (that.player.limit >= that.player.points || that.player.limitBroken == true) {
 
-        that.player.points += that.player.basicUpgrades[0].amount * that.player.basicUpgrades[0].mult;
-        that.player.basicUpgrades[0].amount += that.player.basicUpgrades[1].amount * that.player.basicUpgrades[1].mult
+
+        if ( ch.inCh != 2 ){
+            that.player.points += that.player.basicUpgrades[0].amount * that.player.basicUpgrades[0].mult;
+        
+        } else if ( ch.inCh == 2 ) {
+            that.player.points += Math.pow(that.player.basicUpgrades[0].amount * that.player.basicUpgrades[0].mult, 0.25)
+        }
+
+        that.player.basicUpgrades[0].amount += that.player.basicUpgrades[1].amount * that.player.basicUpgrades[1].mult  
 
         that.player.basicUpgrades[0].amount += that.player.basicUpgrades[1].amount * that.player.basicUpgrades[1].mult
         that.player.basicUpgrades[1].amount += that.player.basicUpgrades[2].amount * that.player.basicUpgrades[2].mult
@@ -104,7 +128,7 @@ player.limitUpgrades[9].text = "Gain 1 Decay Point"
 
 
     // DECAY
-        that.player.limit -= 0.5 * that.player.decayPower
+        that.player.limit -= 1.2 * that.player.decayPower
 
     // DECAY GENERATORS
 
@@ -125,6 +149,30 @@ player.limitUpgrades[9].text = "Gain 1 Decay Point"
     // DECAY POINTS GAIN
 
     if ( that.player.points >= 1e20 ){
-        that.player.decayPointsGain = Math.floor(5^(Math.floor(Math.log10(that.player.points))/240))
+        that.player.decayPointsGain = Math.floor(5^(Math.floor(Math.log10(that.player.points))/that.player.decayGain))
+    }
+
+    // LEGACY MILESTONES
+
+    if ( that.player.legacyTimes >= 1 ){
+        that.player.limitPoints += that.player.lpGain
+    }
+
+    if ( that.player.legacyTimes >= 2 ){
+        for (let i = 0; i < 10; i++) {
+            buyLimitUpgrades(i)
+        }
+    }
+
+    // LEGACY RESOURCES
+
+    that.player.coins += that.player.coinsPerSec;
+    that.player.diamonds += that.player.diamondsPerSec;
+    that.player.rubies += that.player.rubiesPerSec;
+
+    // LEGACY REWARDS
+
+    if (that.player.coinsTier >=2){
+        that.player.coinsPerSec += 0.1
     }
 }

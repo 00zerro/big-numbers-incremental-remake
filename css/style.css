@@ -1,0 +1,360 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    list-style-type: none;
+}
+
+body{
+    background-color: rgb(54, 54, 54);
+    color: rgb(221, 221, 221);
+}
+
+.basic-upgrade{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    border: 1px solid rgb(221, 221, 221);
+    width: 70%;
+    margin: 30px auto;
+    align-items: center;
+    background-color: rgb(17, 17, 17);
+}
+
+.buy-button{
+    border: 1px solid rgb(221, 221, 221);
+    padding: 5px;
+    width: 20%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.autobuy-button{
+    border: 1px solid rgb(221, 221, 221);
+    padding: 4px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.tabs, .subtabs, .legacysubtabs{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30px;
+    transition: 200ms;
+}
+
+.tab{
+    background-color: rgb(17, 17, 17);
+    border: 1px solid rgb(221, 221, 221);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+
+    transition: 200ms;
+}
+
+.tab:hover, .subtab:hover, .legacysubtab:hover{
+    scale: 1.2;
+    transition: 200ms;
+    transition-timing-function: ease-in-out;
+}
+
+.subtab, .legacysubtab{
+    background-color: rgb(17, 17, 17);
+    border: 1px solid rgb(221, 221, 221);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    transition: 200ms;
+}
+
+.legacysubtab{
+    color: greenyellow;
+}
+
+.buttonHover:hover{
+    background-color: rgb(221, 221, 221);
+    color: rgb(17, 17, 17);
+    transition: 200ms;
+    cursor: pointer;
+}
+
+
+[data-tab-content]{
+    display: none;
+}
+
+.active[data-tab-content]{
+    display: block;
+}
+
+.resources-container{
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px dashed;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 40%;
+    margin: auto;
+}
+
+#pointsandlimit{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.basic-upgrades-container{
+    border-bottom: 2px dashed;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 90%;
+    margin: auto;
+}
+
+.saveandload{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.saveButton, .loadButton{
+    border: 1px solid;
+    padding: 20px;
+    background-color: rgb(17, 17, 17);
+}
+
+#autosave-text{
+    text-align: center;
+    margin: 20px;
+}
+
+.tab-image{
+    width: 16px;
+    height: 16px;
+}
+
+.upgrade-image{
+    width: 32px;
+    height: 32px;
+}
+
+.limit-reset-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 2px dashed;
+    border-bottom: 2px dashed;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    width: 20%;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 30px;
+    background-color: rgb(17, 17, 17);
+}
+
+.limit-upgrade{
+    border: 1px solid rgb(221, 221, 221);
+    width: 96px;
+    height: 96px;
+    background-color: rgb(17, 17, 17);
+    transition: 200ms;
+}
+
+.limit-upgrade:hover{
+    transform: scale(1.2);
+    transition: 200ms;
+}
+
+.limit-upgrades-container{
+    margin: auto;
+    border-top: 3px rgb(221, 221, 221) dashed;
+    padding: 20px;
+}
+
+.limit-upgrade-img{
+    width: 96px;
+    height: 96px;
+}
+
+#limit-points-amount{
+    text-align: center;
+    margin: 20px;
+    font-size: 30px;
+}
+
+#upgrade-text{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.autobuy-not-unlocked, .autoreset-not-unlocked{
+    display: none;
+}
+
+#autoreset-button{
+    border: 1px solid rgb(221, 221, 221);
+    padding: 5px;
+    width: 20%;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(17, 17, 17);
+    margin: auto;
+    transition: 200ms;
+}
+
+#autoreset-button:hover{
+    background-color: rgb(221, 221, 221);
+    transition: 200ms;
+    color:rgb(17, 17, 17);
+    cursor: pointer;
+}
+
+[data-subtab-content]{
+    display: none;
+}
+
+.subactive[data-subtab-content]{
+    display: block;
+}
+
+[data-legacysubtab-content]{
+    display: none;
+}
+
+.legacysubactive[data-legacysubtab-content]{
+    display: block;
+}
+
+
+.break-limit-container{
+    width: 50%;
+    float: right;
+    text-align: center;
+
+}
+
+.decay-generators-container{
+    margin-top: 60px;
+    width: 50%;
+    float: left;
+    text-align: center;
+    text-align: center;
+    background-color: rgb(17, 17, 17, 50%);
+    border-radius: 25px;
+}
+
+.decay-points-amount{
+    padding: 20px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.power-generator{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: black;
+    width: 90%;
+    margin: 20px auto;
+    border: 2px solid;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.break-limit-button{
+    padding: 20px;
+     background-color: black;
+     width: 20%;
+     margin: 10% auto;
+     border: 1px solid white;
+}
+
+.decay-power-amount{
+    padding: 20px;
+    border-top: 2px dashed;
+    border-radius: 20px;
+}
+
+.decay-limit-reducing{
+    padding: 20px;
+    border-bottom: 2px dashed;
+    border-radius: 20px;
+}
+
+.not-unlocked{
+    display: none;
+}
+
+.decay-points-gain{
+    margin: 15px;
+    background-color: black;
+    border: 1px dashed;
+    padding: 10px;
+    width: 70%;
+    margin: auto;
+}
+
+.chal-container{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    border-right: 3px dashed;
+    border-left: 3px dashed;
+    border-radius: 15px;
+    width: 25%;
+    margin: auto;
+    background-color: rgb(17, 17, 17, 30%);
+    padding: 20px;
+}
+
+.chal{
+    border: 1px solid rgb(221, 221, 221);
+    width: 96px;
+    height: 96px;
+    text-align: center;
+    background-color: rgb(17, 17, 17);
+    padding-left: 30px;
+    padding-right: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.exit-ch, .enter-ch, .complete-ch{
+    border: 1px solid rgb(221, 221, 221);
+    background-color: rgb(17, 17, 17);
+    margin: 10px auto;
+    width: 10%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#chal-text, .in-ch-text{
+    text-align: center;
+    margin: 40px;
+}
+
+.ch-effect{
+    margin: 30px auto;
+    padding: 20px;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    border: 2px dashed;
+    width: 45%;
+}

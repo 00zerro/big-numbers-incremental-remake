@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/legacy.css">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <title>bNI - Remake</title>
 </head>
 <body>
@@ -13,6 +15,8 @@
             <ul class="tabs">
                 <li class="tab buttonHover" data-tab-target="#pointsTab"><img src="img/points.png" class="tab-image"> Points</li>
                 <li class="tab buttonHover" data-tab-target="#subtab-content"><img src='img/limit.png' class="tab-image"> Limit</li>
+                <li class="tab buttonHover" data-tab-target="#chalTab" v-if="player.decayGenerators[0].amount >= 1"><img src="img/ch.png" class="tab-image"> Challenges</li>
+                <li class="tab buttonHover" data-tab-target="#legacyTab" v-if="ch.chal[0].completed >= 0 && ch.chal[1].completed >= 0"><img src="img/legacy.png" class="tab-image"> Legacy</li>
                 <li class="tab buttonHover" data-tab-target="#optionsTab"><img src="img/options.png" class="tab-image"> Options</li>
             </ul>
         </div>
@@ -86,7 +90,7 @@
                         <li class="subtab buttonHover" data-subtab-target="#limit-tab-2">Decay</li>
                     </ul>
                 </div>
-
+                
                 <div id="limit-tab-1" data-subtab-content class="subactive">
 
                     <div class="limit-reset-button buttonHover" @click="reset">
@@ -159,7 +163,7 @@
                         </div>
 
                         <div class="decay-points-gain buttonHover not-unlocked" id="reset-decay-button" @click="prestige">
-                            prestige Decay Generators and Limit Upgrades to gain {{ format(player.decayPointsGain) }} Decay Points
+                            prestige Limit Upgrades and Points Upgrades to gain {{ format(player.decayPointsGain) }} Decay Points
                         </div>
                     </div>
                 </div>
@@ -177,18 +181,173 @@
                 </div>
                 <p id="autosave-text"><i>game autosaves every 30 seconds</i></p>
 
-                <p>version 0.1</p>
+                <p>version 0.3</p>
                 <a href="https://00zerro.github.io/mainPage/" target="_blank" style="color: white">My main page (still WIP)</a>
+
+                <br><img src="img/bnir thumbnail.png">
                 
+            </div>
+
+            <div id="chalTab" data-tab-content>
+
+                <p v-if="ch.inCh == 0" class="in-ch-text">you are not in a Challenge</p>
+                <p v-if="ch.inCh == 1" class="in-ch-text">you are in {{ch.chal[0].name }}</p>
+                <p v-if="ch.inCh == 2" class="in-ch-text">you are in {{ch.chal[1].name }}</p>
+                <p v-if="ch.inCh == 3" class="in-ch-text">you are in {{ch.chal[2].name }}</p>
+
+                <div class="chal-container">
+                    <div class="chal buttonHover" @click="selectCh(0)">
+                        <p>{{ ch.chal[0].name }}</p>
+                        <p>{{ ch.chal[0].completed }} / {{ ch.chal[0].max }}</p>
+                    </div>
+
+                    <div class="chal buttonHover" @click="selectCh(1)">
+                        <p>{{ ch.chal[1].name }}</p>
+                        <p>{{ ch.chal[1].completed }} / {{ ch.chal[1].max }}</p>
+                    </div>
+
+                    <!--<div class="chal buttonHover" @click="selectCh(2)">
+                        <p>{{ ch.chal[2].name }}</p>
+                        <p>{{ ch.chal[2].completed }} / {{ ch.chal[2].max }}</p>
+                    </div>-->
+
+                </div>
+
+                <p id="chal-text"></p>
+
+                <div class="enter-ch buttonHover" @click="enterCh">
+                    Enter Challenge
+                </div>
+
+                <div class="complete-ch buttonHover" @click="completeCh">
+                    Complete Challenge
+                </div>
+
+                <div class="exit-ch buttonHover" @click="exitCh">
+                    Exit Challenge
+                </div>
+
+                <p class="ch-effect">{{ ch.chal[0].name }} reward: +{{ format(Math.log(ch.chal[0].completed+1)) }} to Decay Generator 2</p>
+                <p class="ch-effect">{{ ch.chal[1].name }} reward: +{{ format(Math.log10(ch.chal[1].completed+1)) }} to Points Upgrades</p>
+                <!--<p class="ch-effect">{{ ch.chal[2].name }} reward: Improves Decay Points gain formula by +{{(format(ch.chal[2].completed*10))}} </p>-->
+
+                <button @click="addCompletions">Add completions</button>
+                
+            </div>
+
+            <div id="legacyTab" data-tab-content>
+                <div class="legacysubtabs-container">
+                    <ul class="legacysubtabs">
+                        <li class="legacysubtab buttonHover" data-legacysubtab-target="#legacy-legacy-tab">Legacy</li>
+                        <li class="legacysubtab buttonHover" data-legacysubtab-target="#legacy-milestones-tab">Milestones</li>
+                        <!--<li class="legacysubtab buttonHover" data-legacysubtab-target="#legacy-beyond-tab">Beyond</li>-->
+                        <li class="legacysubtab buttonHover" data-legacysubtab-target="#legacy-content-tab">Legacy Content</li>
+                    </ul>
+                </div>
+
+                <div id="legacy-milestones-tab" data-legacysubtab-content>
+                    <p class="times-went-legacy"><i>times went Legacy: {{ format(player.legacyTimes) }}</i></p>
+
+                    <div class="milestones-container">
+                        <div class="milestone">
+                            <p>Legacy 1 Time</p>
+                            <p>reward: Gain 100% of Limit Points you would on Reset</p>
+                        </div>
+    
+                        <div class="milestone">
+                            <p>Legacy 2 Times</p>
+                            <p>reward: Limit Upgrades are autobought</p>
+                        </div>
+    
+                        <div class="milestone">
+                            <p>Legacy 3 Times</p>
+                            <p>reward: milestone 3 reward</p>
+                        </div>
+    
+                        <div class="milestone">
+                            <p>Legacy 4 Times</p>
+                            <p>reward: milestone 4 reward</p>
+                        </div>
+    
+                        <div class="milestone">
+                            <p>Legacy 5 Times</p>
+                            <p>reward: milestone 5 reward</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div id="legacy-legacy-tab" data-legacysubtab-content  class="legacysubactive">
+                    <div class="legacy-gain buttonHover">
+                        <p>Rebirth everything to gain {{ format(player.legacyGain) }} Legacy Points</p>
+                    </div>
+                </div>
+
+                <!--<div id="legacy-beyond-tab" data-legacysubtab-content>
+                    beyond
+                </div>-->
+
+                <div id="legacy-content-tab" data-legacysubtab-content>
+
+                    <div class="legacy-content-container">
+                        <div class="coins">
+                            
+                            <p class="coins-amount">you have {{ format(player.coins) }} Coins
+                            <p class="persec">coins / tick: {{ format(player.coinsPerSec) }}</p>    
+
+                            <p class="tier">Tier {{ format(player.coinsTier) }}</p>
+
+                            <div class="coins-reset" @click="coinReset">
+                                <p>reset Coins for bonuses</p>
+                                <p>req: {{ format(player.coinsNeeded) }}</p>
+                            </div>
+
+                            <div class="rewards">
+                                <p v-if="player.coinsTier>=1">rewards:</p>
+                                <p v-if="player.coinsTier>=1">Double Coins gain</p>
+                                <p v-if="player.coinsTier>=2">Add 0.1 to Coins/Tick each Tick</p>
+                                <p v-if="player.coinsTier>=3">Gain 1 Diamond/Tick</p>
+                            </div>
+                            
+                        </div>
+    
+                        <div class="diamonds">
+                            
+                            <p class="diamonds-amount">you have {{ format(player.diamonds) }} Diamonds
+                            <p class="persec">diamonds / tick: {{ format(player.diamondsPerSec) }}</p>
+
+                                <p class="tier">Tier {{ format(player.diamondsTier) }}</p>
+
+                                <div class="diamond-reset" @click="diamondReset">
+                                    <p>reset Diamonds and Coins for bonuses</p>
+                                    <p>req: {{ format(player.diamondsNeeded) }}</p>
+                                </div>
+                        </div>
+    
+                        <div class="rubies">
+                            
+                            <p class="rubies-amount">you have {{ format(player.rubies) }} Rubies
+                            <p class="persec">rubies / tick: {{ format(player.rubiesPerSec) }}</p>
+
+                                <p class="tier">Tier {{ format(player.rubiesTier) }}</p>
+
+                            <div class="ruby-reset" @click="rubyReset">
+                                    <p>reset Rubies, Diamonds and Coins for bonuses</p>
+                                    <p>req: {{ format(player.rubiesNeeded) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
         
     </div>
 
-    <script src="js/vue.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/gameloop.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/vue.js" defer></script>
+    <script src="js/player.js" defer></script>
+    <script src="js/challenges.js" defer></script>
+    <script src="js/gameloop.js" defer></script>
+    <script src="js/index.js" defer></script>
 </body>
 </html>

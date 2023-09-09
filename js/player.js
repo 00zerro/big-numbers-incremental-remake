@@ -20,10 +20,35 @@ player = {
 
     // DECAY
 
-    decayPoints: 0,
+    decayPoints: 1,
     decayPower: 0,
     decayGenerators: [],
     decayPointsGain: 0,
+    decayGain: 240,
+
+    // LEGACY
+
+    legacyTimes: 0,
+    legacyPoints: 0,
+    legacyGain: 0,
+
+    // LEGACY RESOURCES
+
+    coins: 0,
+    diamonds: 0,
+    rubies: 0,
+
+    coinsPerSec: 1,
+    diamondsPerSec: 0,
+    rubiesPerSec: 0,
+
+    coinsNeeded: 300,
+    diamondsNeeded: 9000,
+    rubiesNeeded: 20000,
+
+    coinsTier: 0,
+    diamondsTier: 0,
+    rubiesTier: 0,
 }
 
 firstBasicUpgrade = {
@@ -82,4 +107,8 @@ for (i = 0; i < 3; i++){
     }
 
     player.decayGenerators.push(generator)
+}
+
+if ( player.coinsTier >= 1 ){
+    player.coinsPerSec *= 2
 }

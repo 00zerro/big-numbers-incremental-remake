@@ -1,0 +1,138 @@
+.milestone{
+    margin: 30px auto;
+    padding: 30px;
+    width: 50%;
+    border: 2px rgb(221, 221, 221) solid;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: rgb(0, 59, 15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: 300ms;
+}
+
+.milestone:hover{
+    scale: 1.1;
+    transition: 300ms;
+    transition-timing-function: ease-in-out;
+}
+
+.milestones-container{
+    background-color: rgba(0, 255, 136, 0.1);
+    padding: 1px;
+    width: 80%;
+    margin: auto;
+    border-top-left-radius: 150px;
+    border-top-right-radius: 150px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom: 2px rgb(221, 221, 221) dashed;
+}
+
+.times-went-legacy{
+    background-color: rgba(0, 255, 136, 0.1);
+    text-align: center;
+    width: 30%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-top: 2px rgb(221, 221, 221) dashed;
+}
+
+.legacy-content-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.coins{
+    background-color: rgb(255, 242, 57, 30%);
+    width: 30%;
+    padding-bottom: 20px;
+    
+    border: 2px dashed yellow;
+}
+
+.diamonds{
+    background-color: rgba(47, 241, 255, 0.3);
+    width: 30%;
+    border: 2px dashed blue;
+}
+
+.rubies{
+    background-color: rgb(255, 47, 100, 30%);
+    width: 30%;
+    border: 2px dashed red;
+}
+
+.coins-amount{
+    color: yellow;
+    text-align: center;
+    font-weight: bolder;
+    padding: 20px;
+}
+
+.diamonds-amount{
+    color: blue;
+    text-align: center;
+    font-weight: bolder;
+    padding: 20px;
+}
+
+.rubies-amount{
+    color: red;
+    text-align: center;
+    font-weight: bolder;
+    padding: 20px;
+}
+
+.coins-reset{
+    background-color: yellow;
+}
+
+.diamond-reset{
+    background-color: blue;
+}
+
+.ruby-reset{
+    background-color: red;
+}
+
+.coins-reset, .diamond-reset, .ruby-reset{
+    color: black;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 4px;
+    border: 3px black dashed;
+    cursor: pointer;
+}
+
+.tier, .persec{
+    text-align: center;
+    font-style: italic;
+    padding-bottom: 10px;
+}
+
+.tier{
+    font-weight: bolder;
+}
+
+.legacy-gain{
+    text-align: center;
+    border: 3px black solid;
+    padding: 30px;
+    width: 20%;
+    margin: 50px auto;
+    background-color: darkgreen;
+    transition: 200ms;
+}
+
+.rewards{
+    margin-top: 20px;
+    text-align: center;
+}
