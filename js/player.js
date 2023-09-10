@@ -20,7 +20,7 @@ player = {
 
     // DECAY
 
-    decayPoints: 1,
+    decayPoints: 0,
     decayPower: 0,
     decayGenerators: [],
     decayPointsGain: 0,
